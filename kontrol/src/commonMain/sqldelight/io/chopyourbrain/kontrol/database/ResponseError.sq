@@ -1,0 +1,17 @@
+CREATE TABLE responseError (
+    _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    trace TEXT NOT NULL
+);
+
+selectIdByRequestId:
+SELECT _id FROM responseError WHERE request_id = :requestId;
+
+insertRequestError:
+INSERT INTO responseError(request_id, message, trace)
+VALUES(?, ?, ?);
+
+selectResponseError:
+SELECT * FROM responseError
+WHERE _id = :id;
