@@ -6,7 +6,7 @@ plugins {
 }
 
 version = "0.1.0"
-group = "com.chopyourbrain"
+group = "io.chopyourbrain"
 
 kotlin {
     android {
@@ -65,7 +65,7 @@ android {
 
 sqldelight {
     database("AppDatabase") {
-        packageName = "com.chopyourbrain.kontrol.database"
+        packageName = "io.chopyourbrain.kontrol.database"
         sourceFolders = listOf("sqldelight")
         schemaOutputDirectory = file("build/dbs")
         dialect = "sqlite:3.24"

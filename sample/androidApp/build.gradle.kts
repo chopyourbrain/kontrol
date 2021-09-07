@@ -6,7 +6,7 @@ plugins {
 android {
     compileSdk = 30
     defaultConfig {
-        applicationId = "com.chopyourbrain.kontrol.android"
+        applicationId = "io.chopyourbrain.kontrol.android"
         minSdkVersion(21)
         targetSdkVersion(30)
         versionCode = 1
