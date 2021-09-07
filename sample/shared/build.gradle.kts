@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id("kotlinx-atomicfu")
 }
 
 version = "1.0"
@@ -33,6 +32,7 @@ kotlin {
                 implementation(dep.ktor.network)
                 implementation(dep.napier)
                 implementation(dep.settings)
+                implementation(dep.kotlinx.atomicfu)
             }
         }
         val androidMain by getting {

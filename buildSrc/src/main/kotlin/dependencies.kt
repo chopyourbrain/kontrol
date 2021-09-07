@@ -25,7 +25,7 @@ object ver {
     const val androidx_pager2 = "1.0.0"
     const val androidx_recycler = "1.2.1"
     const val androidx_swipe = "1.1.0"
-    const val atomicfu = "0.16.1"
+    const val atomicfu = "0.16.3"
     const val coroutines = "1.5.0-native-mt"
     const val klock = "2.1.2"
     const val kotlin = sdk.kotlin
@@ -84,13 +84,13 @@ object dep {
     object kotlinx {
         private const val group = "org.jetbrains.kotlinx"
 
-        const val atomicfu = "$group:atomicfu:${ver.atomicfu}"
-
         object coroutines {
             const val android = "$group:kotlinx-coroutines-android:${ver.coroutines}"
             const val core = "$group:kotlinx-coroutines-core:${ver.coroutines}"
             const val common = "$group:kotlinx-coroutines-core-common:${ver.coroutines}"
         }
+
+        const val atomicfu = "$group:atomicfu:${ver.atomicfu}"
 
         object serialization {
             const val json = "$group:kotlinx-serialization-json:${ver.serialization_json}"

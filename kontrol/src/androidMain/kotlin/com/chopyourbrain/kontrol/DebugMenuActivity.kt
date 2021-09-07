@@ -29,6 +29,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
                 else -> null
             }
             currentFragment?.let { fragment ->
+                supportFragmentManager.popBackStack()
                 supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
             }
             return@setOnItemSelectedListener true
@@ -40,7 +41,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
     fun goToNetworkDetail(netCall: NetCall) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, NetworkDetailFragment.create(netCall.id))
-            .addToBackStack(null)
+            .addToBackStack("NetworkDetailFragment")
             .commit()
     }
 

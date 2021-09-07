@@ -3,10 +3,9 @@ plugins {
     id("com.android.library")
     id("com.squareup.sqldelight")
     id("maven-publish")
-    id("kotlinx-atomicfu")
 }
 
-version = "0.0.1"
+version = "0.1.0"
 group = "com.chopyourbrain"
 
 kotlin {
@@ -21,6 +20,7 @@ kotlin {
                 implementation(dep.ktor.core.common)
                 implementation(dep.sqldelight.common)
                 implementation(dep.kotlinx.coroutines.core)
+                implementation(dep.kotlinx.atomicfu)
             }
         }
         val androidMain by getting {
