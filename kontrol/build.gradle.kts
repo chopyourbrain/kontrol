@@ -2,11 +2,11 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    id("maven-publish")
+    id("convention.publication")
 }
 
 version = "0.1.0"
-group = "io.chopyourbrain"
+group = "io.github.chopyourbrain"
 
 kotlin {
     android {
