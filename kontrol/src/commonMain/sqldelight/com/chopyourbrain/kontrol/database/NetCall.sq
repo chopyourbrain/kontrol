@@ -1,0 +1,33 @@
+CREATE TABLE netCall (
+    _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER NOT NULL,
+    timestamp INTEGER NOT NULL,
+    request INTEGER,
+    response INTEGER,
+    FOREIGN KEY(request) REFERENCES request(_id),
+    FOREIGN KEY(response) REFERENCES response(_id)
+);
+
+selectIdByRequestId:
+SELECT _id FROM netCall WHERE request_id = :requestId;
+
+insertCall:
+INSERT INTO netCall(request_id, timestamp, request, response)
+VALUES(:requestID, ?, ?, ?);
+
+updateCallRequest:
+UPDATE netCall
+SET request = :requestID WHERE _id = :callID;
+
+updateCallResponse:
+UPDATE netCall
+SET response = :responseID WHERE _id = :callID;
+
+selectAllCalls:
+SELECT * FROM netCall;
+
+selectCallById:
+SELECT * FROM netCall WHERE request_id = :requestId;
+
+selectLastRequestId:
+SELECT request_id FROM netCall ORDER BY request_id DESC LIMIT 1;

@@ -1,0 +1,28 @@
+CREATE TABLE response (
+    _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER NOT NULL,
+    status INTEGER AS Int NOT NULL,
+    url TEXT NOT NULL,
+    method TEXT NOT NULL,
+    headers TEXT NOT NULL,
+    charset TEXT NOT NULL,
+    contentType TEXT NOT NULL,
+    body TEXT NOT NULL,
+    error INTEGER,
+    FOREIGN KEY(error) REFERENCES responseError(_id)
+);
+
+selectIdByRequestId:
+SELECT _id FROM response WHERE request_id = :requestId;
+
+insertResponse:
+INSERT INTO response(request_id, status, url, method, headers, charset, contentType, body)
+VALUES(:requestID, ?, ?, ?, ?, ?, ?, ?);
+
+selectResponse:
+SELECT * FROM response
+WHERE _id = :id;
+
+updateResponse:
+UPDATE response
+SET error = :errorId WHERE _id = :responseId;

@@ -1,0 +1,31 @@
+CREATE TABLE request (
+    _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    request_id INTEGER NOT NULL,
+    timestamp INTEGER NOT NULL,
+    method TEXT NOT NULL,
+    url TEXT NOT NULL,
+    headers TEXT NOT NULL,
+    charset TEXT NOT NULL,
+    contentType TEXT NOT NULL,
+    body TEXT NOT NULL,
+    error INTEGER,
+    FOREIGN KEY(error) REFERENCES requestError(_id)
+);
+
+selectIdByRequestId:
+SELECT _id FROM request WHERE request_id = :requestId;
+
+insertRequest:
+INSERT INTO request(request_id, timestamp, method, url, headers, charset, contentType, body)
+VALUES(:requestID, ?, ?, ?, ?, ?, ?, ?);
+
+selectRequest:
+SELECT * FROM request
+WHERE _id = :id;
+
+selectAllRequests:
+SELECT * FROM request;
+
+updateRequest:
+UPDATE request
+SET error = :errorId WHERE _id = :requestId;
