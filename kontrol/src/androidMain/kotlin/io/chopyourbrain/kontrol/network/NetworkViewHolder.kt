@@ -3,18 +3,18 @@ package io.chopyourbrain.kontrol.network
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.chopyourbrain.kontrol.R
-import io.chopyourbrain.kontrol.databinding.ItemNetworkBinding
+import io.chopyourbrain.kontrol.databinding.KntrlItemNetworkBinding
 import io.chopyourbrain.kontrol.ktor.NetCall
-import java.util.*
+import io.chopyourbrain.kontrol.timestampToString
 
 internal class NetworkViewHolder(
-    private val binding: ItemNetworkBinding,
+    private val binding: KntrlItemNetworkBinding,
     private val itemClickListener: NetworkFragment.ItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     private val colorDefault = 0xFFFFFFFF.toInt()
-    private val colorSuccess = ContextCompat.getColor(binding.root.context, R.color.green)
-    private val colorWarn = ContextCompat.getColor(binding.root.context, R.color.yellow)
-    private val colorError = ContextCompat.getColor(binding.root.context, R.color.red)
+    private val colorSuccess = ContextCompat.getColor(binding.root.context, R.color.kntrl_green)
+    private val colorWarn = ContextCompat.getColor(binding.root.context, R.color.kntrl_yellow)
+    private val colorError = ContextCompat.getColor(binding.root.context, R.color.kntrl_red)
 
     fun bind(call: NetCall) {
         val status = call.response?.status
@@ -27,13 +27,13 @@ internal class NetworkViewHolder(
             else -> colorDefault
         }
 
-        binding.url.text = call.request?.url
-        binding.method.text = call.request?.method
+        binding.kntrlUrl.text = call.request?.url
+        binding.kntrlMethod.text = call.request?.method
 
-        binding.code.text = status?.toString() ?: "ERROR"
-        binding.code.setTextColor(codeColor)
+        binding.kntrlCode.text = status?.toString() ?: "ERROR"
+        binding.kntrlCode.setTextColor(codeColor)
 
-        binding.time.text = Date(call.timestamp).toString()
+        binding.kntrlTime.text = call.timestamp.timestampToString()
 
         binding.root.setOnClickListener { itemClickListener.onItemClick(call) }
     }

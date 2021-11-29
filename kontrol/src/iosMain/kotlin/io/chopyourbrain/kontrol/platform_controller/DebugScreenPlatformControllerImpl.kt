@@ -5,7 +5,7 @@ import platform.UIKit.UINavigationController
 
 internal class DebugScreenPlatformControllerImpl(
     private val navigationController: UINavigationController
-) : io.chopyourbrain.kontrol.platform_controller.DebugScreenPlatformController {
+) : DebugScreenPlatformController {
 
     override fun show() {
         val debugViewController = DebugMenuTabViewController()

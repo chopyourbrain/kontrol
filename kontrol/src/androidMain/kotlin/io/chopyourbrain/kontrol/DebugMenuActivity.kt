@@ -2,6 +2,7 @@ package io.chopyourbrain.kontrol
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.Menu
@@ -16,12 +17,12 @@ internal class DebugMenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_debug)
+        setContentView(R.layout.kntrl_activity_debug)
         supportActionBar?.title = "Debug menu"
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNav.menu.add(Menu.NONE, 1, Menu.NONE, "Properties").setIcon(R.drawable.ic_properties).itemId
-        bottomNav.menu.add(Menu.NONE, 2, Menu.NONE, "Network").setIcon(R.drawable.ic_network)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.kntrl_bottom_nav)
+        bottomNav.menu.add(Menu.NONE, 1, Menu.NONE, "Properties").setIcon(R.drawable.kntrl_ic_properties).itemId
+        bottomNav.menu.add(Menu.NONE, 2, Menu.NONE, "Network").setIcon(R.drawable.kntrl_ic_network)
         bottomNav.setOnItemSelectedListener {
             val currentFragment = when (it.itemId) {
                 1 -> PropertiesFragment.create()
@@ -30,17 +31,17 @@ internal class DebugMenuActivity : AppCompatActivity() {
             }
             currentFragment?.let { fragment ->
                 supportFragmentManager.popBackStack()
-                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.kntrl_container, fragment).commit()
             }
             return@setOnItemSelectedListener true
         }
         if (supportFragmentManager.fragments.isEmpty())
-            supportFragmentManager.beginTransaction().replace(R.id.container, PropertiesFragment.create()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.kntrl_container, PropertiesFragment.create()).commit()
     }
 
     fun goToNetworkDetail(netCall: NetCall) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, NetworkDetailFragment.create(netCall.id))
+            .replace(R.id.kntrl_container, NetworkDetailFragment.create(netCall.id))
             .addToBackStack("NetworkDetailFragment")
             .commit()
     }
@@ -48,7 +49,7 @@ internal class DebugMenuActivity : AppCompatActivity() {
     companion object {
         fun startActivity(context: Context) {
             context.startActivity(Intent(context, DebugMenuActivity::class.java).apply {
-                flags = FLAG_ACTIVITY_NEW_TASK
+                flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             })
         }
     }

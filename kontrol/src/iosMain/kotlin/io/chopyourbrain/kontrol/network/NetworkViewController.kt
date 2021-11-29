@@ -7,8 +7,7 @@ import io.chopyourbrain.kontrol.repository.getCallsList
 import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.ObjCObjectBase
 import kotlinx.coroutines.*
-import platform.Foundation.NSBundle
-import platform.Foundation.NSIndexPath
+import platform.Foundation.*
 import platform.UIKit.*
 import platform.darwin.NSInteger
 import platform.darwin.NSObject
@@ -55,10 +54,12 @@ internal class NetworkDataSource : NSObject(), UITableViewDataSourceProtocol {
         return 1
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun tableView(tableView: UITableView, numberOfRowsInSection: NSInteger): NSInteger {
         return responseList?.size?.toLong() ?: 0
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun tableView(tableView: UITableView, cellForRowAtIndexPath: NSIndexPath): UITableViewCell {
         val item = responseList?.get(cellForRowAtIndexPath.row.toInt())
         val cell = tableView.dequeueReusableCellWithIdentifier("network_cell", cellForRowAtIndexPath) as? NetworkCell
@@ -68,7 +69,8 @@ internal class NetworkDataSource : NSObject(), UITableViewDataSourceProtocol {
                 val itemCode = item?.response?.status?.toString() ?: "ERROR"
                 method.text = item?.request?.method
                 code.text = itemCode
-                time.text = item?.timestamp?.toString()
+
+                time.text = item?.timestamp.timestampToString()
                 url.text = item?.request?.url
                 when (itemCode.first().toString()) {
                     "2" -> code.textColor = UIColor(red = 0.0 / 255, green = 132.0 / 255, blue = 80.0 / 255, alpha = 1.0)
@@ -87,6 +89,7 @@ internal class NetworkViewDelegate : NSObject(), UITableViewDelegateProtocol {
     var responseList: List<NetCall>? = null
     var navigationController: UINavigationController? = null
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun tableView(tableView: UITableView, didSelectRowAtIndexPath: NSIndexPath) {
         val networkDetailViewController = NetworkDetailViewController()
         networkDetailViewController.modalPresentationStyle = 0

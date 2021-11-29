@@ -11,28 +11,28 @@ internal abstract class PropertyViewHolder(view: View) : RecyclerView.ViewHolder
 }
 
 internal class TitleViewHolder(
-    private val binding: ItemTitlePropertyBinding
+    private val binding: KntrlItemTitlePropertyBinding
 ) : PropertyViewHolder(binding.root) {
     override fun bind(property: Property) {
         val titleDebugProperty = property as? TitleProperty
         if (titleDebugProperty != null)
-            binding.title.text = titleDebugProperty.title
+            binding.kntrlTitle.text = titleDebugProperty.title
     }
 }
 
 internal class SwitcherViewHolder(
-    private val binding: ItemSwitcherPropertyBinding
+    private val binding: KntrlItemSwitcherPropertyBinding
 ) : PropertyViewHolder(binding.root) {
     override fun bind(property: Property) {
         val switcherDebugProperty = property as? SwitcherProperty
         if (switcherDebugProperty != null) {
             binding.apply {
-                description.text = switcherDebugProperty.description
-                switcher.isChecked = switcherDebugProperty.isEnabled.value
+                kntrlDescription.text = switcherDebugProperty.description
+                kntrlSwitcher.isChecked = switcherDebugProperty.isEnabled.value
                 root.setOnClickListener {
-                    switcher.isChecked = !switcher.isChecked
+                    kntrlSwitcher.isChecked = !kntrlSwitcher.isChecked
                 }
-                switcher.setOnCheckedChangeListener { _, isChecked ->
+                kntrlSwitcher.setOnCheckedChangeListener { _, isChecked ->
                     switcherDebugProperty.onCheckedChangeListener.invoke(isChecked)
                 }
             }
@@ -41,22 +41,22 @@ internal class SwitcherViewHolder(
 }
 
 internal class DropDownViewHolder(
-    private val binding: ItemDropdownPropertyBinding
+    private val binding: KntrlItemDropdownPropertyBinding
 ) : PropertyViewHolder(binding.root) {
     override fun bind(property: Property) {
         val dropDownProperty = property as? DropDownProperty
         if (dropDownProperty != null) {
             binding.apply {
-                description.text = dropDownProperty.description
-                spinner.adapter = ArrayAdapter(
+                kntrlDescription.text = dropDownProperty.description
+                kntrlSpinner.adapter = ArrayAdapter(
                     root.context,
                     android.R.layout.simple_spinner_item,
                     dropDownProperty.valueList).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
                 val selectedItemPosition = dropDownProperty.valueList.indexOf(dropDownProperty.currentValue.value)
-                spinner.setSelection(selectedItemPosition)
-                spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                kntrlSpinner.setSelection(selectedItemPosition)
+                kntrlSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         dropDownProperty.onDropDownStateChanged.invoke(dropDownProperty.valueList[position])
                     }
@@ -69,27 +69,27 @@ internal class DropDownViewHolder(
 }
 
 internal class ButtonViewHolder(
-    private val binding: ItemButtonPropertyBinding
+    private val binding: KntrlItemButtonPropertyBinding
 ) : PropertyViewHolder(binding.root) {
     override fun bind(property: Property) {
         val buttonDebugProperty = property as? ButtonProperty
         if (buttonDebugProperty != null) {
             binding.apply {
-                button.text = buttonDebugProperty.text
-                button.setOnClickListener { buttonDebugProperty.onButtonClickListener.invoke() }
+                kntrlButton.text = buttonDebugProperty.text
+                kntrlButton.setOnClickListener { buttonDebugProperty.onButtonClickListener.invoke() }
             }
         }
     }
 }
 
 internal class TextViewHolder(
-    private val binding: ItemTextPropertyBinding
+    private val binding: KntrlItemTextPropertyBinding
 ) : PropertyViewHolder(binding.root) {
     override fun bind(property: Property) {
         val textDebugProperty = property as? TextProperty
         if (textDebugProperty != null) {
-            binding.description.text = textDebugProperty.description
-            binding.value.text = textDebugProperty.value
+            binding.kntrlDescription.text = textDebugProperty.description
+            binding.kntrlValue.text = textDebugProperty.value
         }
     }
 }

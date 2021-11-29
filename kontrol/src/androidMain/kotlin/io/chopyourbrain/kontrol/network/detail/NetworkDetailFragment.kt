@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
-import io.chopyourbrain.kontrol.databinding.FragmentNetworkDetailBinding
+import io.chopyourbrain.kontrol.databinding.KntrlFragmentNetworkDetailBinding
 import io.chopyourbrain.kontrol.repository.getCallById
 
 internal class NetworkDetailFragment : Fragment() {
-    lateinit var binding: FragmentNetworkDetailBinding
+    lateinit var binding: KntrlFragmentNetworkDetailBinding
     private val callId by lazy { requireArguments().callId }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentNetworkDetailBinding.inflate(inflater)
+        binding = KntrlFragmentNetworkDetailBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycleScope.launchWhenStarted {
             val call = getCallById(callId)
-            binding.pager.adapter = NetworkDetailPagerAdapter(childFragmentManager, lifecycle, call)
-            TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+            binding.kntrlPager.adapter = NetworkDetailPagerAdapter(childFragmentManager, lifecycle, call)
+            TabLayoutMediator(binding.kntrlTabLayout, binding.kntrlPager) { tab, position ->
                 tab.text = when (position) {
                     0 -> "OVERVIEW"
                     1 -> "REQUEST"

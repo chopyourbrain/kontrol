@@ -52,10 +52,12 @@ internal class PropertiesDataSource : NSObject(), UITableViewDataSourceProtocol 
         return 1
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun tableView(tableView: UITableView, numberOfRowsInSection: NSInteger): NSInteger {
         return properties?.size?.toLong() ?: 0
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun tableView(tableView: UITableView, cellForRowAtIndexPath: NSIndexPath): UITableViewCell {
         val item = properties?.get(cellForRowAtIndexPath.row.toInt())
         if (item is TitleProperty) {

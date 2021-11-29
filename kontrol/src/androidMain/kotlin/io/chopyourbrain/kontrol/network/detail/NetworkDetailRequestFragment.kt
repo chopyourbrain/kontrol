@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.chopyourbrain.kontrol.databinding.FragmentNetworkRequestBinding
+import io.chopyourbrain.kontrol.databinding.KntrlFragmentNetworkRequestBinding
 import io.chopyourbrain.kontrol.repository.parseToStringMap
 
 internal class NetworkDetailRequestFragment : Fragment() {
-    lateinit var binding: FragmentNetworkRequestBinding
+    lateinit var binding: KntrlFragmentNetworkRequestBinding
     private val headers by lazy { requireArguments().headers }
     private val body by lazy { requireArguments().body }
     private val error by lazy { requireArguments().error }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentNetworkRequestBinding.inflate(inflater)
+        binding = KntrlFragmentNetworkRequestBinding.inflate(inflater)
         return binding.root
     }
 
@@ -25,9 +25,9 @@ internal class NetworkDetailRequestFragment : Fragment() {
             headersString.append(it.key.removePrefix(" ") + ": " + it.value)
             headersString.appendLine()
         }
-        binding.headers.text = headersString.toString()
-        binding.body.text = body
-        binding.error.text = error
+        binding.kntrlHeaders.text = headersString.toString()
+        binding.kntrlBody.text = body
+        binding.kntrlError.text = error
     }
 
     companion object {

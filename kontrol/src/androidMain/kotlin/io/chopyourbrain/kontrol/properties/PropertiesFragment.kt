@@ -27,23 +27,23 @@ internal class PropertiesFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
             return when (viewType) {
                 PropertiesViewHolderType.Title.value -> {
-                    val itemBinding = ItemTitlePropertyBinding.inflate(LayoutInflater.from(parent.context))
+                    val itemBinding = KntrlItemTitlePropertyBinding.inflate(LayoutInflater.from(parent.context))
                     TitleViewHolder(itemBinding)
                 }
                 PropertiesViewHolderType.Switcher.value -> {
-                    val itemBinding = ItemSwitcherPropertyBinding.inflate(LayoutInflater.from(parent.context))
+                    val itemBinding = KntrlItemSwitcherPropertyBinding.inflate(LayoutInflater.from(parent.context))
                     SwitcherViewHolder(itemBinding)
                 }
                 PropertiesViewHolderType.DropDown.value -> {
-                    val itemBinding = ItemDropdownPropertyBinding.inflate(LayoutInflater.from(parent.context))
+                    val itemBinding = KntrlItemDropdownPropertyBinding.inflate(LayoutInflater.from(parent.context))
                     DropDownViewHolder(itemBinding)
                 }
                 PropertiesViewHolderType.Button.value -> {
-                    val itemBinding = ItemButtonPropertyBinding.inflate(LayoutInflater.from(parent.context))
+                    val itemBinding = KntrlItemButtonPropertyBinding.inflate(LayoutInflater.from(parent.context))
                     ButtonViewHolder(itemBinding)
                 }
                 PropertiesViewHolderType.Text.value -> {
-                    val itemBinding = ItemTextPropertyBinding.inflate(LayoutInflater.from(parent.context))
+                    val itemBinding = KntrlItemTextPropertyBinding.inflate(LayoutInflater.from(parent.context))
                     TextViewHolder(itemBinding)
                 }
                 else -> throw NotImplementedError()
@@ -66,20 +66,20 @@ internal class PropertiesFragment : Fragment() {
         }
     }
 
-    private lateinit var binding: FragmentPropertiesBinding
+    private lateinit var binding: KntrlFragmentPropertiesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentPropertiesBinding.inflate(inflater)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = KntrlFragmentPropertiesBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.recyclerProperties.apply {
+        binding.kntrlRecyclerProperties.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = this@PropertiesFragment.adapter
         }
@@ -87,13 +87,13 @@ internal class PropertiesFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_properties, menu)
+        inflater.inflate(R.menu.kntrl_menu_properties, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_share -> {
+            R.id.kntrl_menu_share -> {
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, getPropertiesAsString())
