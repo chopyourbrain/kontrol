@@ -8,19 +8,12 @@ version = "1.0"
 
 kotlin {
     android()
-
-    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
-    if (onPhone) {
-        iosArm64("ios")
-    } else {
-        iosX64("ios")
-    }
+    ios()
 
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
         podfile = project.file("../iosApp/Podfile")
     }
 

@@ -1,5 +1,7 @@
 package io.chopyourbrain.kontrol.ktor
 
+import io.chopyourbrain.kontrol.timestampToString
+
 data class NetCall(
     val id: Long,
     val timestamp: Long,
@@ -14,7 +16,7 @@ data class NetCall(
             appendLine()
             append("Status: ${response?.status}")
             appendLine()
-            append("Request time: ${request?.timestamp}")
+            append("Request time: ${request?.timestamp.timestampToString()}")
             appendLine()
             append("Request headers: ")
             appendLine()

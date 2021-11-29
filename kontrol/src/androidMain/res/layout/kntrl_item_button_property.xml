@@ -5,11 +5,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-        <Button android:id="@+id/button"
+        <Button android:id="@+id/kntrl_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:background="@drawable/button_background"
+                android:background="@drawable/kntrl_button_background"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp"/>
 

@@ -5,7 +5,7 @@
                                                        android:layout_width="match_parent"
                                                        android:layout_height="wrap_content">
 
-        <TextView android:id="@+id/url"
+        <TextView android:id="@+id/kntrl_url"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_margin="8dp"
@@ -13,29 +13,29 @@
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView android:id="@+id/code"
+        <TextView android:id="@+id/kntrl_code"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_margin="8dp"
                   android:textSize="16sp"
                   app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@+id/url"/>
+                  app:layout_constraintTop_toBottomOf="@+id/kntrl_url"/>
 
-        <TextView android:id="@+id/method"
+        <TextView android:id="@+id/kntrl_method"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginStart="8dp"
                   android:textSize="16sp"
-                  app:layout_constraintStart_toEndOf="@+id/code"
-                  app:layout_constraintTop_toTopOf="@+id/code"/>
+                  app:layout_constraintStart_toEndOf="@+id/kntrl_code"
+                  app:layout_constraintTop_toTopOf="@+id/kntrl_code"/>
 
-        <TextView android:id="@+id/time"
+        <TextView android:id="@+id/kntrl_time"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginStart="8dp"
                   android:textSize="16sp"
-                  app:layout_constraintStart_toEndOf="@+id/method"
-                  app:layout_constraintTop_toTopOf="@+id/method"/>
+                  app:layout_constraintStart_toEndOf="@+id/kntrl_method"
+                  app:layout_constraintTop_toTopOf="@+id/kntrl_method"/>
 
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
@@ -43,10 +43,10 @@
               android:layout_marginTop="4dp"
               android:layout_marginEnd="12dp"
               android:layout_marginBottom="4dp"
-              android:background="@color/delimeter"
+              android:background="@color/kntrl_delimeter"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@id/code"/>
+              app:layout_constraintTop_toBottomOf="@id/kntrl_code"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

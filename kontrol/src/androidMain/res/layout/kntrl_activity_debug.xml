@@ -6,12 +6,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-        <FrameLayout android:id="@+id/container"
+        <FrameLayout android:id="@+id/kntrl_container"
                      android:layout_width="match_parent"
                      android:layout_height="match_parent"
-                     android:layout_above="@+id/bottom_nav"/>
+                     android:layout_above="@+id/kntrl_bottom_nav"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView android:id="@+id/bottom_nav"
+        <com.google.android.material.bottomnavigation.BottomNavigationView android:id="@+id/kntrl_bottom_nav"
                                                                            android:layout_width="match_parent"
                                                                            android:layout_height="wrap_content"
                                                                            android:layout_alignParentBottom="true"

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                       android:layout_width="match_parent"
-                                                       android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ScrollView android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -11,23 +8,20 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
 
-
-                <TextView android:id="@+id/headers"
-                          android:layout_width="wrap_content"
+                <TextView android:id="@+id/kntrl_headers"
+                          android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_margin="8dp"
                           android:textIsSelectable="true"/>
 
-
-                <TextView android:id="@+id/body"
-                          android:layout_width="wrap_content"
+                <TextView android:id="@+id/kntrl_body"
+                          android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_margin="8dp"
                           android:textIsSelectable="true"/>
 
-
-                <TextView android:id="@+id/error"
-                          android:layout_width="wrap_content"
+                <TextView android:id="@+id/kntrl_error"
+                          android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:layout_margin="8dp"
                           android:textIsSelectable="true"/>
@@ -36,5 +30,4 @@
 
         </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

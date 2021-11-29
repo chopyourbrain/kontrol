@@ -48,6 +48,7 @@ internal class DebugMenuTabViewController @ObjCObjectBase.OverrideInit construct
         this.presentViewController(activityViewController, true, null)
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun tabBarController(tabBarController: UITabBarController, shouldSelectViewController: UIViewController): Boolean {
         return true
     }

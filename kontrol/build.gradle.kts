@@ -21,6 +21,7 @@ kotlin {
                 implementation(dep.sqldelight.common)
                 implementation(dep.kotlinx.coroutines.core)
                 implementation(dep.kotlinx.atomicfu)
+                implementation(dep.klock.core)
             }
         }
         val androidMain by getting {

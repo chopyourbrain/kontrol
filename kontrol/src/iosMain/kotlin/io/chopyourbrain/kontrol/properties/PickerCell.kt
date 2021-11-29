@@ -82,10 +82,12 @@ internal class PickerCell : UITableViewCell, UIPickerViewDataSourceProtocol, UIP
         return 1
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun pickerView(pickerView: UIPickerView, numberOfRowsInComponent: NSInteger): NSInteger {
         return dropDownProperty?.valueList?.size?.toLong() ?: 0
     }
 
+    @Suppress("CONFLICTING_OVERLOADS","RETURN_TYPE_MISMATCH_ON_OVERRIDE")
     override fun pickerView(pickerView: UIPickerView, titleForRow: NSInteger, forComponent: NSInteger): String? {
         return dropDownProperty?.valueList?.get(titleForRow.toInt())
     }

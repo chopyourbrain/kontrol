@@ -5,25 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.chopyourbrain.kontrol.databinding.FragmentNetworkOverviewBinding
+import io.chopyourbrain.kontrol.databinding.KntrlFragmentNetworkOverviewBinding
+import io.chopyourbrain.kontrol.timestampToString
 
 internal class NetworkDetailOverviewFragment : Fragment() {
-    lateinit var binding: FragmentNetworkOverviewBinding
+    lateinit var binding: KntrlFragmentNetworkOverviewBinding
     private val url by lazy { requireArguments().url }
     private val method by lazy { requireArguments().method }
     private val status by lazy { requireArguments().status }
     private val requestTime by lazy { requireArguments().requestTime }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentNetworkOverviewBinding.inflate(inflater)
+        binding = KntrlFragmentNetworkOverviewBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.url.text = "Url: $url"
-        binding.method.text = "Method: $method"
-        binding.status.text = "Status: $status"
-        binding.requestTime.text = "Request time: $requestTime"
+        binding.kntrlUrl.text = "Url: $url"
+        binding.kntrlMethod.text = "Method: $method"
+        binding.kntrlStatus.text = "Status: $status"
+        binding.kntrlRequestTime.text = "Request time: ${requestTime.timestampToString()}"
     }
 
     companion object {
@@ -34,7 +35,7 @@ internal class NetworkDetailOverviewFragment : Fragment() {
                     this.url = url
                     this.method = method
                     this.status = if (status == 0) "ERROR" else status.toString()
-                    this.requestTime = requestTime.toString()
+                    this.requestTime = requestTime
                 }
             }
         }
@@ -51,8 +52,8 @@ internal class NetworkDetailOverviewFragment : Fragment() {
             get() = getString("status") ?: ""
             set(value) = putString("status", value)
 
-        var Bundle.requestTime: String
-            get() = getString("requestTime") ?: ""
-            set(value) = putString("requestTime", value)
+        var Bundle.requestTime: Long
+            get() = getLong("requestTime")
+            set(value) = putLong("requestTime", value)
     }
 }

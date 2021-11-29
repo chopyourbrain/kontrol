@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import io.chopyourbrain.kontrol.DebugMenuActivity
-import io.chopyourbrain.kontrol.databinding.FragmentNetworkBinding
-import io.chopyourbrain.kontrol.databinding.ItemNetworkBinding
+import io.chopyourbrain.kontrol.databinding.KntrlFragmentNetworkBinding
+import io.chopyourbrain.kontrol.databinding.KntrlItemNetworkBinding
 import io.chopyourbrain.kontrol.ktor.NetCall
 import io.chopyourbrain.kontrol.network.NetworkFragment.ItemClickListener
 import io.chopyourbrain.kontrol.repository.getCallsList
 
 internal class NetworkFragment : Fragment() {
-    lateinit var binding: FragmentNetworkBinding
+    lateinit var binding: KntrlFragmentNetworkBinding
     private val diff = object : DiffUtil.ItemCallback<NetCall>() {
         override fun areItemsTheSame(oldItem: NetCall, newItem: NetCall) = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: NetCall, newItem: NetCall): Boolean {
@@ -33,7 +33,7 @@ internal class NetworkFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NetworkViewHolder {
-            val itemBinding = ItemNetworkBinding.inflate(LayoutInflater.from(parent.context))
+            val itemBinding = KntrlItemNetworkBinding.inflate(LayoutInflater.from(parent.context))
             return NetworkViewHolder(itemBinding, itemClickListener)
         }
 
@@ -43,13 +43,13 @@ internal class NetworkFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentNetworkBinding.inflate(inflater)
+        binding = KntrlFragmentNetworkBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.recyclerRequest.adapter = adapter
-        binding.recyclerRequest.layoutManager = LinearLayoutManager(context)
+        binding.kntrlRecyclerRequest.adapter = adapter
+        binding.kntrlRecyclerRequest.layoutManager = LinearLayoutManager(context)
         lifecycleScope.launchWhenStarted { adapter.submitList(getCallsList()) }
     }
 

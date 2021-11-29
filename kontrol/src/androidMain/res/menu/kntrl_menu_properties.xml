@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/menu_share"
-          android:icon="@drawable/ic_share"
+    <item android:id="@+id/kntrl_menu_share"
+          android:icon="@drawable/kntrl_ic_share"
           android:title="Share"
           app:showAsAction="always"/>
 
