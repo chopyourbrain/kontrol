@@ -15,10 +15,10 @@ object DebugMenuRouter {
         val httpClient = HttpClientHolder.httpClient.value
         if (httpClient != null) {
             MainScope().launch {
-                runCatching { httpClient.post<String>("https://reqres.in/api/users?page=2") }
-                runCatching { httpClient.post<String>("https://reqres.in/api/login") }
-                runCatching { httpClient.post<String>("foobar") }
-                runCatching { httpClient.post<String>("foobar.com/test") }
+                runCatching { httpClient.post("https://reqres.in/api/users?page=2") }
+                runCatching { httpClient.post("https://reqres.in/api/login") }
+                runCatching { httpClient.post("foobar") }
+                runCatching { httpClient.post("foobar.com/test") }
             }
             val properties = properties {
                 group("Network") {

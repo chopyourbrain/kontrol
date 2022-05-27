@@ -8,7 +8,9 @@ version = "1.0"
 
 kotlin {
     android()
-    ios()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     cocoapods {
         summary = "Some description for the Shared Module"
@@ -26,6 +28,7 @@ kotlin {
                 implementation(dep.napier)
                 implementation(dep.settings)
                 implementation(dep.kotlinx.atomicfu)
+                implementation(dep.kotlinx.coroutines.core)
             }
         }
         val androidMain by getting {
@@ -33,7 +36,10 @@ kotlin {
                 implementation(project(":kontrol"))
             }
         }
-        val iosMain by getting {
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
             dependencies {
                 implementation(project(":kontrol"))
                 implementation(dep.ktor.client.ios)
@@ -41,6 +47,10 @@ kotlin {
                 implementation(dep.napier)
                 implementation(dep.settings)
             }
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
         }
     }
 }
@@ -51,5 +61,9 @@ android {
     defaultConfig {
         minSdk = 21
         targetSdk = 30
+    }
+    compileOptions {
+        sourceCompatibility = sdk.java
+        targetCompatibility = sdk.java
     }
 }

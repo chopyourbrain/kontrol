@@ -12,7 +12,9 @@ kotlin {
     android {
         publishLibraryVariants("release", "debug")
     }
-    ios()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
@@ -39,20 +41,27 @@ kotlin {
                 implementation(dep.material)
             }
         }
-        val iosMain by getting {
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
             dependencies {
                 implementation(dep.ktor.client.ios)
                 implementation(dep.sqldelight.ios)
             }
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
         }
     }
 }
 
 android {
-    compileSdkVersion(sdk.compile)
+    compileSdk = sdk.compile
     defaultConfig {
-        minSdkVersion(sdk.min)
-        targetSdkVersion(sdk.target)
+        minSdk = sdk.min
+        targetSdk = sdk.target
     }
     buildFeatures {
         dataBinding = true

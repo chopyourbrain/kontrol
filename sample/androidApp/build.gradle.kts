@@ -7,8 +7,8 @@ android {
     compileSdk = 30
     defaultConfig {
         applicationId = "io.chopyourbrain.kontrol.android"
-        minSdkVersion(21)
-        targetSdkVersion(30)
+        minSdk = 21
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
     }

@@ -8,7 +8,7 @@ object sdk {
     const val compile = target
 
     val java = JavaVersion.VERSION_1_8
-    const val kotlin = "1.5.20"
+    const val kotlin = "1.6.21"
 
     const val ios = "10.0"
 }
@@ -20,20 +20,21 @@ object ver {
     const val androidx_lifecycle = "2.3.1"
     const val androidx_pager2 = "1.0.0"
     const val androidx_recycler = "1.2.1"
-    const val atomicfu = "0.16.3"
-    const val coroutines = "1.5.0-native-mt"
-    const val klock = "2.1.2"
+    const val atomicfu = "0.17.2"
+    const val coroutines = "1.6.0-native-mt"
+    const val coroutines_android = "1.6.1"
+    const val klock = "2.7.0"
     const val kotlin = sdk.kotlin
-    const val ktor = "1.6.0"
+    const val ktor = "2.0.1"
     const val material = "1.4.0-rc01"
-    const val napier = "1.5.0"
+    const val napier = "2.6.1"
     const val okhttp = "4.9.1"
-    const val settings = "0.7.7"
+    const val settings = "0.9"
     const val stately = "1.1.1"
     const val sqldelight = "1.5.3"
 
     object plugin {
-        const val android_build_tools = "7.0.2"
+        const val android_build_tools = "7.2.0"
         const val versions = "0.39.0"
     }
 }
@@ -77,7 +78,7 @@ object dep {
         private const val group = "org.jetbrains.kotlinx"
 
         object coroutines {
-            const val android = "$group:kotlinx-coroutines-android:${ver.coroutines}"
+            const val android = "$group:kotlinx-coroutines-android:${ver.coroutines_android}"
             const val core = "$group:kotlinx-coroutines-core:${ver.coroutines}"
             const val common = "$group:kotlinx-coroutines-core-common:${ver.coroutines}"
         }
@@ -91,7 +92,7 @@ object dep {
         const val network = "$group:ktor-network:${ver.ktor}"
 
         object client {
-            const val ios = "$group:ktor-client-ios:${ver.ktor}"
+            const val ios = "$group:ktor-client-darwin:${ver.ktor}"
             const val okhttp = "$group:ktor-client-okhttp:${ver.ktor}"
         }
 
