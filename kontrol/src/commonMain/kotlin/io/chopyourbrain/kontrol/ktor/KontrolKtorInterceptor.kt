@@ -5,8 +5,8 @@ import io.chopyourbrain.kontrol.database.AppDatabase
 import io.chopyourbrain.kontrol.repository.DBRepository
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.features.*
-import io.ktor.client.features.observer.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.observer.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -74,7 +74,7 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
         }
     }
 
-    private suspend fun processReceive(pipeline: PipelineContext<HttpResponse, HttpClientCall>) {
+    private suspend fun processResponse(pipeline: PipelineContext<HttpResponseContainer, HttpClientCall>) {
         val id = pipeline.context.attributes[requestIdKey]
 
         val entry = ResponseEntry()
@@ -90,18 +90,6 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
         }
 
         consumer.saveResponse(id, entry)
-
-        runCatching {
-            pipeline.proceedWith(pipeline.subject)
-        }.onFailure {
-            consumer.saveResponse(id, it)
-            throw it
-        }
-    }
-
-    private suspend fun processResponse(pipeline: PipelineContext<HttpResponseContainer, HttpClientCall>) {
-        val id = pipeline.context.attributes[requestIdKey]
-
         runCatching {
             pipeline.proceed()
         }.onFailure {
@@ -117,7 +105,7 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
         val contentType = response.contentType()?.toString()
 
         val entry = ResponseBodyEntry(
-            response.content.tryReadText(charset),
+            response.bodyAsChannel().tryReadText(charset),
             contentType,
             charset
         )
@@ -125,7 +113,7 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
         consumer.saveResponse(id, entry)
     }
 
-    companion object : HttpClientFeature<Config, KontrolKtorInterceptor> {
+    companion object : HttpClientPlugin<Config, KontrolKtorInterceptor> {
         private val requestIdKey = AttributeKey<Long>("RequestID")
         private val requestId = atomic(1000L)
 
@@ -140,25 +128,21 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
             return KontrolKtorInterceptor(config.level)
         }
 
-        override fun install(feature: KontrolKtorInterceptor, scope: HttpClient) {
+        override fun install(plugin: KontrolKtorInterceptor, scope: HttpClient) {
             scope.requestPipeline.intercept(HttpRequestPipeline.Before) {
                 context.attributes.put(requestIdKey, requestId.getAndIncrement())
             }
 
             scope.sendPipeline.intercept(HttpSendPipeline.Monitoring) {
-                feature.processRequest(this)
-            }
-
-            scope.receivePipeline.intercept(HttpReceivePipeline.State) {
-                feature.processReceive(this)
+                plugin.processRequest(this)
             }
 
             scope.responsePipeline.intercept(HttpResponsePipeline.Receive) {
-                feature.processResponse(this)
+                plugin.processResponse(this)
             }
 
-            if (feature.level.body) {
-                val observer: ResponseHandler = { response -> feature.processResponse(response) }
+            if (plugin.level.body) {
+                val observer: ResponseHandler = { response -> plugin.processResponse(response) }
                 ResponseObserver.install(ResponseObserver(observer), scope)
             }
         }

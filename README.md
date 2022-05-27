@@ -7,11 +7,13 @@
 
 <img src="https://github.com/chopyourbrain/kontrol/blob/master/screenshots/2.png" width="281" height="600"><img src="https://github.com/chopyourbrain/kontrol/blob/master/screenshots/3.png" width="299" height="600">
 
-A Kotlin Multiplatform library for creating debug menu.
+Kontrol - a Kotlin Multiplatform library for creating a debugging menu.
 
 ## Setup
 
-Add dependency to your build.gradle
+### KMM:
+
+Add a dependency to your build.gradle
 
 ```kotlin
 val commonMain by getting {
@@ -50,6 +52,34 @@ val httpClient = HttpClient(okhttp) {
       databaseDriverFactory = DatabaseDriverFactory(applicationContext)
     }
 }
+```
+
+### Android:
+
+Add dependency to your build.gradle
+
+```kotlin
+implementation("io.github.chopyourbrain:kontrol-android:$kontrol_version")
+```
+
+Add setup to your application:
+
+```kotlin
+class App : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        kontrolAndroidInstall(applicationContext)
+    }
+}
+```
+
+Okhttp inspection setup:
+
+```kotlin
+val client = OkHttpClient.Builder()
+    .addInterceptor(KontrolOkhttpInterceptor(DatabaseDriverFactory(applicationContext)))
+    .build()
 ```
 
 ## Using the Library
