@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    namespace = "io.chopyourbrain.kontrol.android"
+    compileSdk = sdk.compile
     defaultConfig {
         applicationId = "io.chopyourbrain.kontrol.android"
         minSdk = 21
-        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
     }
@@ -19,6 +19,10 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = sdk.java
+        targetCompatibility = sdk.java
     }
 }
 

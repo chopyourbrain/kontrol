@@ -1,19 +1,37 @@
 package io.chopyourbrain.kontrol.network
 
-import io.chopyourbrain.kontrol.*
 import io.chopyourbrain.kontrol.ktor.NetCall
 import io.chopyourbrain.kontrol.network.detail.NetworkDetailViewController
 import io.chopyourbrain.kontrol.repository.getCallsList
+import io.chopyourbrain.kontrol.timestampToString
+import io.github.aakira.napier.Napier
+import kotlinx.cinterop.BetaInteropApi
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
-import kotlinx.cinterop.ObjCObjectBase
-import kotlinx.coroutines.*
-import platform.Foundation.*
-import platform.UIKit.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import platform.Foundation.NSBundle
+import platform.Foundation.NSIndexPath
+import platform.UIKit.UIColor
+import platform.UIKit.UIEdgeInsetsMake
+import platform.UIKit.UINavigationController
+import platform.UIKit.UITableView
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellSelectionStyle
+import platform.UIKit.UITableViewCellSeparatorStyle
+import platform.UIKit.UITableViewDataSourceProtocol
+import platform.UIKit.UITableViewDelegateProtocol
+import platform.UIKit.UIViewController
+import platform.UIKit.navigationController
+import platform.UIKit.row
 import platform.darwin.NSInteger
 import platform.darwin.NSObject
 
+@OptIn(BetaInteropApi::class, ExperimentalForeignApi::class)
 @ExportObjCClass
-internal class NetworkViewController @ObjCObjectBase.OverrideInit constructor(
+internal class NetworkViewController @OverrideInit constructor(
     nibName: String? = null,
     bundle: NSBundle? = null
 ) : UIViewController(nibName, bundle) {
@@ -35,6 +53,7 @@ internal class NetworkViewController @ObjCObjectBase.OverrideInit constructor(
             separatorStyle = UITableViewCellSeparatorStyle.UITableViewCellSeparatorStyleSingleLine
             scope.launch {
                 val callList = getCallsList()
+                Napier.d(callList.toString())
                 this@NetworkViewController.dataSource.responseList = callList
                 this@NetworkViewController.delegate.responseList = callList
                 this@NetworkViewController.delegate.navigationController = navigationController

@@ -4,7 +4,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
-import io.chopyourbrain.kontrol.databinding.*
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemButtonPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemDropdownPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemSwitcherPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemTextPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemTitlePropertyBinding
 
 internal abstract class PropertyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     abstract fun bind(property: Property)

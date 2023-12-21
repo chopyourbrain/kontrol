@@ -1,22 +1,31 @@
 package io.chopyourbrain.kontrol.properties
 
+import kotlinx.cinterop.BetaInteropApi
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.ObjCAction
-import kotlinx.cinterop.ObjCObjectBase
 import platform.Foundation.NSSelectorFromString
-import platform.UIKit.*
+import platform.UIKit.UIControlEventValueChanged
+import platform.UIKit.UILabel
+import platform.UIKit.UISwitch
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellMeta
+import platform.UIKit.UITableViewCellStyle
 
+@OptIn(BetaInteropApi::class, ExperimentalForeignApi::class)
 @ExportObjCClass
-internal class SwitcherCell : UITableViewCell {
+internal class SwitcherCell @OverrideInit constructor(
+    style: UITableViewCellStyle,
+    reuseIdentifier: String? = null
+) : UITableViewCell(
+    style,
+    reuseIdentifier
+) {
     val title = UILabel()
     val switcher = UISwitch()
     var switcherProperty: SwitcherProperty? = null
 
-    @ObjCObjectBase.OverrideInit
-    constructor(style: UITableViewCellStyle, reuseIdentifier: String? = null) : super(
-        style,
-        reuseIdentifier
-    ) {
+    init {
         contentView.addSubview(title)
         contentView.addSubview(switcher)
         title.setTranslatesAutoresizingMaskIntoConstraints(false)

@@ -1,21 +1,32 @@
 package io.chopyourbrain.kontrol.properties
 
+import kotlinx.cinterop.BetaInteropApi
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.ObjCAction
-import kotlinx.cinterop.ObjCObjectBase
 import platform.Foundation.NSSelectorFromString
-import platform.UIKit.*
+import platform.UIKit.UIButton
+import platform.UIKit.UIColor
+import platform.UIKit.UIControlEventTouchUpInside
+import platform.UIKit.UIFont
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellMeta
+import platform.UIKit.UITableViewCellStyle
+import platform.UIKit.systemBlueColor
 
+@OptIn(BetaInteropApi::class, ExperimentalForeignApi::class)
 @ExportObjCClass
-internal class ButtonCell : UITableViewCell {
+internal class ButtonCell @OverrideInit constructor(
+    style: UITableViewCellStyle,
+    reuseIdentifier: String? = null
+) : UITableViewCell(
+    style,
+    reuseIdentifier
+) {
     val button = UIButton()
     var buttonProperty: ButtonProperty? = null
 
-    @ObjCObjectBase.OverrideInit
-    constructor(style: UITableViewCellStyle, reuseIdentifier: String? = null) : super(
-        style,
-        reuseIdentifier
-    ) {
+    init {
         contentView.addSubview(button)
         button.setTranslatesAutoresizingMaskIntoConstraints(false)
         button.leftAnchor.constraintEqualToAnchor(leftAnchor, 10.0).setActive(true)

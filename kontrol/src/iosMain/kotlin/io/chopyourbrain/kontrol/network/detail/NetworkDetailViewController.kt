@@ -1,17 +1,23 @@
 package io.chopyourbrain.kontrol.network.detail
 
 import io.chopyourbrain.kontrol.repository.getCallById
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExportObjCClass
-import kotlinx.cinterop.ObjCObjectBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import platform.Foundation.NSBundle
-import platform.UIKit.*
+import platform.UIKit.UIColor
+import platform.UIKit.UIFont
+import platform.UIKit.UITextView
+import platform.UIKit.UIViewController
+import platform.UIKit.systemBackgroundColor
 
+@OptIn(BetaInteropApi::class)
 @ExportObjCClass
-internal class NetworkDetailViewController @ObjCObjectBase.OverrideInit constructor(
+internal class NetworkDetailViewController
+@OverrideInit constructor(
     nibName: String? = null,
     bundle: NSBundle? = null
 ) : UIViewController(nibName, bundle) {

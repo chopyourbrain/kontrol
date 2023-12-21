@@ -2,15 +2,24 @@ package io.chopyourbrain.kontrol.properties
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-import io.chopyourbrain.kontrol.R
 import io.chopyourbrain.kontrol.ServiceLocator
-import io.chopyourbrain.kontrol.databinding.*
-import io.chopyourbrain.kontrol.properties.*
+import io.chopyourbrain.kontrol.android.R
+import io.chopyourbrain.kontrol.android.databinding.KntrlFragmentPropertiesBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemButtonPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemDropdownPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemSwitcherPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemTextPropertyBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemTitlePropertyBinding
 
 internal class PropertiesFragment : Fragment() {
     private val diff = object : DiffUtil.ItemCallback<Property>() {

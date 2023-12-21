@@ -2,9 +2,18 @@ package io.chopyourbrain.kontrol.repository
 
 import io.chopyourbrain.kontrol.ServiceLocator
 import io.chopyourbrain.kontrol.database.AppDatabase
-import io.chopyourbrain.kontrol.ktor.*
+import io.chopyourbrain.kontrol.ktor.NetCall
+import io.chopyourbrain.kontrol.ktor.NetCallEntry
+import io.chopyourbrain.kontrol.ktor.NetCallError
+import io.chopyourbrain.kontrol.ktor.Request
+import io.chopyourbrain.kontrol.ktor.RequestBody
+import io.chopyourbrain.kontrol.ktor.Response
+import io.chopyourbrain.kontrol.ktor.ResponseBody
+import io.chopyourbrain.kontrol.ktor.toError
+import io.chopyourbrain.kontrol.ktor.tryReadText
 import io.chopyourbrain.kontrol.okhttp.OkhttpNetCallEntry
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 internal class DBRepository(private val database: AppDatabase) {
 
@@ -34,7 +43,7 @@ internal class DBRepository(private val database: AppDatabase) {
                 ) else null
 
                 val parsedResponse = if (response != null) Response(
-                    response.status,
+                    response.status.toInt(),
                     response.url,
                     response.method,
                     response.headers.parseToStringMap(),
@@ -43,7 +52,7 @@ internal class DBRepository(private val database: AppDatabase) {
                 ) else null
 
                 NetCall(it.request_id, it.timestamp, parsedRequest, parsedResponse)
-            }
+            }.apply {  }
         }
     }
 
@@ -73,7 +82,7 @@ internal class DBRepository(private val database: AppDatabase) {
             ) else null
 
             val parsedResponse = if (response != null) Response(
-                response.status,
+                response.status.toInt(),
                 response.url,
                 response.method,
                 response.headers.parseToStringMap(),
@@ -156,7 +165,7 @@ internal class DBRepository(private val database: AppDatabase) {
 
                 responseQueries.insertResponse(
                     requestID = call.requestID,
-                    status = response.status,
+                    status = response.status.toLong(),
                     url = response.url,
                     method = response.method,
                     headers = response.headers.toString(),
@@ -241,7 +250,7 @@ internal class DBRepository(private val database: AppDatabase) {
 
                 responseQueries.insertResponse(
                     requestID = call.requestID,
-                    status = response.status,
+                    status = response.status.toLong(),
                     url = response.url,
                     method = response.method,
                     headers = response.headers.toString(),

@@ -1,19 +1,25 @@
 package io.chopyourbrain.kontrol.properties
 
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExportObjCClass
-import kotlinx.cinterop.ObjCObjectBase
-import platform.UIKit.*
+import platform.UIKit.UILabel
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellMeta
+import platform.UIKit.UITableViewCellStyle
 
+@OptIn(BetaInteropApi::class)
 @ExportObjCClass
-internal class TextCell : UITableViewCell {
+internal class TextCell @OverrideInit constructor(
+    style: UITableViewCellStyle,
+    reuseIdentifier: String? = null
+) : UITableViewCell(
+    style,
+    reuseIdentifier
+) {
     val title = UILabel()
     val value = UILabel()
 
-    @ObjCObjectBase.OverrideInit
-    constructor(style: UITableViewCellStyle, reuseIdentifier: String? = null) : super(
-        style,
-        reuseIdentifier
-    ) {
+    init {
         contentView.addSubview(title)
         contentView.addSubview(value)
         title.setTranslatesAutoresizingMaskIntoConstraints(false)

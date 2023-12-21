@@ -2,8 +2,8 @@ package io.chopyourbrain.kontrol.network
 
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import io.chopyourbrain.kontrol.R
-import io.chopyourbrain.kontrol.databinding.KntrlItemNetworkBinding
+import io.chopyourbrain.kontrol.android.R
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemNetworkBinding
 import io.chopyourbrain.kontrol.ktor.NetCall
 import io.chopyourbrain.kontrol.timestampToString
 

@@ -1,19 +1,19 @@
 package io.chopyourbrain.sample
 
-import com.russhwolf.settings.AppleSettings
+import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.Settings
 import io.chopyourbrain.kontrol.DatabaseDriverFactory
 import io.chopyourbrain.kontrol.kontrolIOSInstall
 import io.chopyourbrain.kontrol.ktor.DetailLevel
 import io.chopyourbrain.kontrol.ktor.KontrolKtorInterceptor
-import io.ktor.client.*
-import io.ktor.client.engine.ios.*
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.darwin.Darwin
 import platform.UIKit.UINavigationController
 
 object DebugMenuIOS {
 
     fun initIOS(navigationController: UINavigationController) {
-        val httpClient = HttpClient(Ios.create { }) {
+        val httpClient = HttpClient(Darwin.create { }) {
             install(KontrolKtorInterceptor) {
                 databaseDriverFactory = DatabaseDriverFactory()
                 level = DetailLevel.ALL
@@ -24,6 +24,6 @@ object DebugMenuIOS {
     }
 
     fun createIOSSettings(): Settings {
-        return AppleSettings.Factory().create()
+        return NSUserDefaultsSettings.Factory().create()
     }
 }

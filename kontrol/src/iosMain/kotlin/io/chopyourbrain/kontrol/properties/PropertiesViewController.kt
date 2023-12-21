@@ -1,17 +1,28 @@
 package io.chopyourbrain.kontrol.properties
 
-import io.chopyourbrain.kontrol.*
-import io.chopyourbrain.kontrol.properties.*
+import io.chopyourbrain.kontrol.ServiceLocator
+import kotlinx.cinterop.BetaInteropApi
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
-import kotlinx.cinterop.ObjCObjectBase
 import platform.Foundation.NSBundle
 import platform.Foundation.NSIndexPath
-import platform.UIKit.*
+import platform.UIKit.UIControlStateNormal
+import platform.UIKit.UIEdgeInsetsMake
+import platform.UIKit.UITableView
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellSelectionStyle
+import platform.UIKit.UITableViewCellSeparatorStyle
+import platform.UIKit.UITableViewDataSourceProtocol
+import platform.UIKit.UITableViewDelegateProtocol
+import platform.UIKit.UIViewController
+import platform.UIKit.row
 import platform.darwin.NSInteger
 import platform.darwin.NSObject
 
+@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
 @ExportObjCClass
-internal class PropertiesViewController @ObjCObjectBase.OverrideInit constructor(
+internal class PropertiesViewController
+@OverrideInit constructor(
     nibName: String? = null,
     bundle: NSBundle? = null
 ) : UIViewController(nibName, bundle) {

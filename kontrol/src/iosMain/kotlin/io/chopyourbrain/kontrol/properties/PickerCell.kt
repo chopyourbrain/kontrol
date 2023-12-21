@@ -1,24 +1,43 @@
 package io.chopyourbrain.kontrol.properties
 
+import kotlinx.cinterop.BetaInteropApi
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ExportObjCClass
 import kotlinx.cinterop.ObjCAction
-import kotlinx.cinterop.ObjCObjectBase
 import platform.Foundation.NSSelectorFromString
-import platform.UIKit.*
+import platform.UIKit.UIBarButtonItem
+import platform.UIKit.UIBarButtonItemStyle
+import platform.UIKit.UIBarButtonSystemItem
+import platform.UIKit.UIBarStyleDefault
+import platform.UIKit.UIColor
+import platform.UIKit.UILabel
+import platform.UIKit.UIPickerView
+import platform.UIKit.UIPickerViewDataSourceProtocol
+import platform.UIKit.UIPickerViewDelegateProtocol
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellMeta
+import platform.UIKit.UITableViewCellStyle
+import platform.UIKit.UITextField
+import platform.UIKit.UIToolbar
+import platform.UIKit.endEditing
+import platform.UIKit.systemBlueColor
 import platform.darwin.NSInteger
 
+@OptIn(BetaInteropApi::class, ExperimentalForeignApi::class)
 @ExportObjCClass
-internal class PickerCell : UITableViewCell, UIPickerViewDataSourceProtocol, UIPickerViewDelegateProtocol {
+internal class PickerCell @OverrideInit constructor(
+    style: UITableViewCellStyle,
+    reuseIdentifier: String? = null
+) : UITableViewCell(
+    style,
+    reuseIdentifier
+), UIPickerViewDataSourceProtocol, UIPickerViewDelegateProtocol {
     val title = UILabel()
     val picker = UIPickerView()
     val textField = UITextField()
     var dropDownProperty: DropDownProperty? = null
 
-    @ObjCObjectBase.OverrideInit
-    constructor(style: UITableViewCellStyle, reuseIdentifier: String? = null) : super(
-        style,
-        reuseIdentifier
-    ) {
+    init {
         contentView.addSubview(title)
         contentView.addSubview(textField)
         title.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -55,12 +74,10 @@ internal class PickerCell : UITableViewCell, UIPickerViewDataSourceProtocol, UIP
         )
         toolBar.setItems(listOf(cancelButton, spaceButton, doneButton), false)
         toolBar.userInteractionEnabled = true
-
         textField.inputView = picker
         textField.inputAccessoryView = toolBar
         picker.showsSelectionIndicator = true
         textField.tintColor = UIColor.clearColor
-
     }
 
     @ObjCAction

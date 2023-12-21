@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.chopyourbrain.kontrol.android.R
 import io.chopyourbrain.kontrol.ktor.NetCall
 import io.chopyourbrain.kontrol.network.NetworkFragment
 import io.chopyourbrain.kontrol.network.detail.NetworkDetailFragment

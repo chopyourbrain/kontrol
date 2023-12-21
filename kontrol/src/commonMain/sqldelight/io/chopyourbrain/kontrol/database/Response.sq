@@ -1,7 +1,7 @@
 CREATE TABLE response (
     _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     request_id INTEGER NOT NULL,
-    status INTEGER AS Int NOT NULL,
+    status INTEGER NOT NULL,
     url TEXT NOT NULL,
     method TEXT NOT NULL,
     headers TEXT NOT NULL,

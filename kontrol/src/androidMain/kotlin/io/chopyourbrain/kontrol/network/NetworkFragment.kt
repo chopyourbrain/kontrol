@@ -5,16 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import io.chopyourbrain.kontrol.DebugMenuActivity
-import io.chopyourbrain.kontrol.databinding.KntrlFragmentNetworkBinding
-import io.chopyourbrain.kontrol.databinding.KntrlItemNetworkBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlFragmentNetworkBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlItemNetworkBinding
 import io.chopyourbrain.kontrol.ktor.NetCall
 import io.chopyourbrain.kontrol.network.NetworkFragment.ItemClickListener
 import io.chopyourbrain.kontrol.repository.getCallsList
+import kotlinx.coroutines.launch
 
 internal class NetworkFragment : Fragment() {
     lateinit var binding: KntrlFragmentNetworkBinding
@@ -42,7 +45,11 @@ internal class NetworkFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = KntrlFragmentNetworkBinding.inflate(inflater)
         return binding.root
     }
@@ -50,7 +57,12 @@ internal class NetworkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.kntrlRecyclerRequest.adapter = adapter
         binding.kntrlRecyclerRequest.layoutManager = LinearLayoutManager(context)
-        lifecycleScope.launchWhenStarted { adapter.submitList(getCallsList()) }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.submitList(getCallsList())
+            }
+        }
     }
 
     companion object {

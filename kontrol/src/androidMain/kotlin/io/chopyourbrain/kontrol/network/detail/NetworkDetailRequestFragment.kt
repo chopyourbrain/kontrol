@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.chopyourbrain.kontrol.databinding.KntrlFragmentNetworkRequestBinding
+import io.chopyourbrain.kontrol.android.databinding.KntrlFragmentNetworkRequestBinding
 import io.chopyourbrain.kontrol.repository.parseToStringMap
 
 internal class NetworkDetailRequestFragment : Fragment() {

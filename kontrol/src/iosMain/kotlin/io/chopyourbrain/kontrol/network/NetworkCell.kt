@@ -1,21 +1,28 @@
 package io.chopyourbrain.kontrol.network
 
+import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExportObjCClass
-import kotlinx.cinterop.ObjCObjectBase
-import platform.UIKit.*
+import platform.UIKit.UIFont
+import platform.UIKit.UILabel
+import platform.UIKit.UITableViewCell
+import platform.UIKit.UITableViewCellMeta
+import platform.UIKit.UITableViewCellStyle
 
+@OptIn(BetaInteropApi::class)
 @ExportObjCClass
-internal class NetworkCell : UITableViewCell {
+internal class NetworkCell @OverrideInit constructor(
+    style: UITableViewCellStyle,
+    reuseIdentifier: String? = null
+) : UITableViewCell(
+    style,
+    reuseIdentifier
+) {
     val code = UILabel()
     val time = UILabel()
     val method = UILabel()
     val url = UILabel()
 
-    @ObjCObjectBase.OverrideInit
-    constructor(style: UITableViewCellStyle, reuseIdentifier: String? = null) : super(
-        style,
-        reuseIdentifier
-    ) {
+    init {
         contentView.addSubview(code)
         contentView.addSubview(time)
         contentView.addSubview(method)

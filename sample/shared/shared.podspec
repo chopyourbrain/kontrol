@@ -11,6 +11,17 @@ Pod::Spec.new do |spec|
     spec.ios.deployment_target = '14.1'
                 
                 
+    if !Dir.exist?('build/cocoapods/framework/shared.framework') || Dir.empty?('build/cocoapods/framework/shared.framework')
+        raise "
+
+        Kotlin framework 'shared' doesn't exist yet, so a proper Xcode project can't be generated.
+        'pod install' should be executed after running ':generateDummyFramework' Gradle task:
+
+            ./gradlew :sample:shared:generateDummyFramework
+
+        Alternatively, proper pod installation is performed during Gradle sync in the IDE (if Podfile location is set)"
+    end
+                
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':sample:shared',
         'PRODUCT_MODULE_NAME' => 'shared',
@@ -22,8 +33,8 @@ Pod::Spec.new do |spec|
             :execution_position => :before_compile,
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT
-                if [ "YES" = "$COCOAPODS_SKIP_KOTLIN_BUILD" ]; then
-                  echo "Skipping Gradle build task invocation due to COCOAPODS_SKIP_KOTLIN_BUILD environment variable set to \"YES\""
+                if [ "YES" = "$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED" ]; then
+                  echo "Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \"YES\""
                   exit 0
                 fi
                 set -ev

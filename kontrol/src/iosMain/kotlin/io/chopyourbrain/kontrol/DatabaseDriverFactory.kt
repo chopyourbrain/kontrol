@@ -1,7 +1,7 @@
 package io.chopyourbrain.kontrol
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import io.chopyourbrain.kontrol.database.AppDatabase
 
 actual class DatabaseDriverFactory {

@@ -4,37 +4,36 @@ import org.gradle.api.JavaVersion
 
 object sdk {
     const val min = 21
-    const val target = 30
+    const val target = 34
     const val compile = target
 
-    val java = JavaVersion.VERSION_1_8
-    const val kotlin = "1.6.21"
+    val java = JavaVersion.VERSION_17
+    const val kotlin = "1.9.21"
 
     const val ios = "10.0"
 }
 
 object ver {
-    const val androidx_appcompat = "1.3.0"
-    const val androidx_constraint = "2.0.4"
-    const val androidx_core = "1.6.0-beta02"
-    const val androidx_lifecycle = "2.3.1"
+    const val androidx_appcompat = "1.6.1"
+    const val androidx_constraint = "2.1.4"
+    const val androidx_core = "1.12.0"
+    const val androidx_lifecycle = "2.6.2"
     const val androidx_pager2 = "1.0.0"
-    const val androidx_recycler = "1.2.1"
-    const val atomicfu = "0.17.2"
-    const val coroutines = "1.6.0-native-mt"
-    const val coroutines_android = "1.6.1"
-    const val klock = "2.7.0"
+    const val androidx_recycler = "1.3.2"
+    const val atomicfu = "0.23.1"
+    const val coroutines = "1.7.3"
+    const val coroutines_android = "1.7.3"
+    const val klock = "4.0.10"
     const val kotlin = sdk.kotlin
-    const val ktor = "2.0.1"
-    const val material = "1.4.0-rc01"
+    const val ktor = "2.3.6"
+    const val material = "1.9.0"
     const val napier = "2.6.1"
-    const val okhttp = "4.9.1"
-    const val settings = "0.9"
-    const val stately = "1.1.1"
-    const val sqldelight = "1.5.3"
+    const val okhttp = "4.12.0"
+    const val settings = "1.1.1"
+    const val sqldelight = "2.0.0"
 
     object plugin {
-        const val android_build_tools = "7.2.0"
+        const val android_build_tools = "8.2.0"
         const val versions = "0.39.0"
     }
 }
@@ -43,7 +42,6 @@ object dep {
     const val material = "com.google.android.material:material:${ver.material}"
     const val napier = "io.github.aakira:napier:${ver.napier}"
     const val settings = "com.russhwolf:multiplatform-settings:${ver.settings}"
-    const val stately = "co.touchlab:stately-common:${ver.stately}"
 
     object androidx {
         const val appcompat = "androidx.appcompat:appcompat:${ver.androidx_appcompat}"
@@ -109,7 +107,7 @@ object dep {
     }
 
     object sqldelight {
-        private const val group = "com.squareup.sqldelight"
+        private const val group = "app.cash.sqldelight"
 
         const val common = "$group:runtime:${ver.sqldelight}"
         const val android = "$group:android-driver:${ver.sqldelight}"

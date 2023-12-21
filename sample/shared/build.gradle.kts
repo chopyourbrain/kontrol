@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -7,60 +9,54 @@ plugins {
 version = "1.0"
 
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
     }
-
+    targets.filterIsInstance<KotlinNativeTarget>().forEach{
+        it.binaries.filterIsInstance<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>()
+            .forEach { lib ->
+                lib.isStatic = false
+                lib.linkerOpts.add("-lsqlite3")
+            }
+    }
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(project(":kontrol"))
-                implementation(dep.ktor.core.common)
-                implementation(dep.ktor.network)
-                implementation(dep.napier)
-                implementation(dep.settings)
-                implementation(dep.kotlinx.atomicfu)
-                implementation(dep.kotlinx.coroutines.core)
-            }
+        commonMain.dependencies {
+            implementation(project(":kontrol"))
+            implementation(dep.ktor.core.common)
+            implementation(dep.ktor.network)
+            implementation(dep.napier)
+            implementation(dep.settings)
+            implementation(dep.kotlinx.atomicfu)
+            implementation(dep.kotlinx.coroutines.core)
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(project(":kontrol"))
-            }
+
+        androidMain.dependencies {
+            implementation(project(":kontrol"))
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependencies {
-                implementation(project(":kontrol"))
-                implementation(dep.ktor.client.ios)
-                implementation(dep.sqldelight.ios)
-                implementation(dep.napier)
-                implementation(dep.settings)
-            }
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+
+        iosMain.dependencies {
+            implementation(project(":kontrol"))
+            implementation(dep.ktor.client.ios)
+            implementation(dep.sqldelight.ios)
+            implementation(dep.napier)
+            implementation(dep.settings)
         }
     }
 }
 
 android {
-    compileSdk = 30
+    namespace = "io.chopyourbrain.kontrol.android"
+    compileSdk = sdk.compile
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 30
     }
     compileOptions {
         sourceCompatibility = sdk.java
