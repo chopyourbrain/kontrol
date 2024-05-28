@@ -5,6 +5,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.charsets.*
 
 interface Entry
+// Entries
 
 class NetCallEntry(
     val requestID: Long,
