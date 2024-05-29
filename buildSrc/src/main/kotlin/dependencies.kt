@@ -25,7 +25,7 @@ object ver {
     const val coroutines_android = "1.7.3"
     const val klock = "4.0.10"
     const val kotlin = sdk.kotlin
-    const val ktor = "2.3.6"
+    const val ktor = "3.0.0-beta-1"
     const val material = "1.9.0"
     const val napier = "2.6.1"
     const val okhttp = "4.12.0"
