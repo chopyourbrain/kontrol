@@ -31,7 +31,7 @@ internal class NetworkDetailViewController
         val textView = UITextView()
         view.addSubview(textView)
         textView.apply {
-            editable = false
+            setEditable(false)
             setTranslatesAutoresizingMaskIntoConstraints(false)
             centerXAnchor.constraintEqualToAnchor(view.centerXAnchor).setActive(true)
             widthAnchor.constraintEqualToAnchor(view.widthAnchor).setActive(true)

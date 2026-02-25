@@ -3,37 +3,37 @@
 import org.gradle.api.JavaVersion
 
 object sdk {
-    const val min = 21
-    const val target = 34
+    const val min = 23
+    const val target = 36
     const val compile = target
 
     val java = JavaVersion.VERSION_17
-    const val kotlin = "1.9.21"
+    const val kotlin = "2.3.10"
 
     const val ios = "10.0"
 }
 
 object ver {
-    const val androidx_appcompat = "1.6.1"
-    const val androidx_constraint = "2.1.4"
-    const val androidx_core = "1.12.0"
-    const val androidx_lifecycle = "2.6.2"
-    const val androidx_pager2 = "1.0.0"
-    const val androidx_recycler = "1.3.2"
-    const val atomicfu = "0.23.1"
-    const val coroutines = "1.7.3"
-    const val coroutines_android = "1.7.3"
+    const val androidx_appcompat = "1.7.1"
+    const val androidx_constraint = "2.2.1"
+    const val androidx_core = "1.17.0"
+    const val androidx_lifecycle = "2.10.0"
+    const val androidx_pager2 = "1.1.0"
+    const val androidx_recycler = "1.4.0"
+    const val atomicfu = "0.31.0"
+    const val coroutines = "1.10.2"
+    const val coroutines_android = "1.10.2"
     const val klock = "4.0.10"
     const val kotlin = sdk.kotlin
-    const val ktor = "2.3.6"
-    const val material = "1.9.0"
+    const val ktor = "3.4.0"
+    const val material = "1.12.0"
     const val napier = "2.6.1"
-    const val okhttp = "4.12.0"
-    const val settings = "1.1.1"
-    const val sqldelight = "2.0.0"
+    const val okhttp = "5.3.0"
+    const val settings = "1.3.0"
+    const val sqldelight = "2.2.1"
 
     object plugin {
-        const val android_build_tools = "8.2.0"
+        const val android_build_tools = "9.0.1"
         const val versions = "0.39.0"
     }
 }

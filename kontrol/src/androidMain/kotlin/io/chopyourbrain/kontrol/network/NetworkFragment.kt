@@ -58,8 +58,8 @@ internal class NetworkFragment : Fragment() {
         binding.kntrlRecyclerRequest.adapter = adapter
         binding.kntrlRecyclerRequest.layoutManager = LinearLayoutManager(context)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.submitList(getCallsList())
             }
         }

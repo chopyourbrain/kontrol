@@ -52,11 +52,11 @@ kotlin {
 }
 
 android {
-    namespace = "io.chopyourbrain.kontrol.android"
+    namespace = "io.chopyourbrain.kontrol.sample.shared"
     compileSdk = sdk.compile
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 21
+        minSdk = sdk.min
     }
     compileOptions {
         sourceCompatibility = sdk.java
