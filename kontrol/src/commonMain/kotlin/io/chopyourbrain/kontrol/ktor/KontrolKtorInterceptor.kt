@@ -3,19 +3,29 @@ package io.chopyourbrain.kontrol.ktor
 import io.chopyourbrain.kontrol.ServiceLocator
 import io.chopyourbrain.kontrol.database.AppDatabase
 import io.chopyourbrain.kontrol.repository.DBRepository
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.observer.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.http.content.*
-import io.ktor.util.*
-import io.ktor.util.date.*
-import io.ktor.util.pipeline.*
-import io.ktor.utils.io.*
-import io.ktor.utils.io.charsets.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.HttpClientCall
+import io.ktor.client.plugins.HttpClientPlugin
+import io.ktor.client.plugins.observer.ResponseHandler
+import io.ktor.client.plugins.observer.ResponseObserver
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.HttpRequestPipeline
+import io.ktor.client.request.HttpSendPipeline
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.HttpResponseContainer
+import io.ktor.client.statement.HttpResponsePipeline
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.HttpHeaders
+import io.ktor.http.Url
+import io.ktor.http.charset
+import io.ktor.http.content.OutgoingContent
+import io.ktor.http.contentType
+import io.ktor.util.AttributeKey
+import io.ktor.util.date.getTimeMillis
+import io.ktor.util.pipeline.PipelineContext
+import io.ktor.utils.io.ByteChannel
+import io.ktor.utils.io.InternalAPI
+import io.ktor.utils.io.charsets.Charsets
 import kotlinx.atomicfu.atomic
 
 class KontrolKtorInterceptor(val level: DetailLevel) {
@@ -38,7 +48,8 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
 
             val requestHeaders = joinHeaders(pipeline.context.headers.entries())
 
-            val lengthHeader = content?.contentLength?.let { HttpHeaders.ContentLength to it.toString() }
+            val lengthHeader =
+                content?.contentLength?.let { HttpHeaders.ContentLength to it.toString() }
             val typeHeader = content?.contentType?.let { HttpHeaders.ContentType to it.toString() }
 
             val contentHeaders = content?.headers?.entries()?.let { joinHeaders(it) }
@@ -123,11 +134,14 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
             val config = Config().apply(block)
             val databaseDriverFactory = config.databaseDriverFactory
                 ?: throw IllegalStateException("Init databaseDriverFactory")
-            ServiceLocator.DBRepository.value = DBRepository(AppDatabase(databaseDriverFactory.createDriver()))
-            requestId.value = ServiceLocator.DBRepository.value?.getLastRequestId()?.plus(1L) ?: 1000
+            ServiceLocator.DBRepository.value =
+                DBRepository(AppDatabase(databaseDriverFactory.createDriver()))
+            requestId.value =
+                ServiceLocator.DBRepository.value?.getLastRequestId()?.plus(1L) ?: 1000
             return KontrolKtorInterceptor(config.level)
         }
 
+        @OptIn(InternalAPI::class)
         override fun install(plugin: KontrolKtorInterceptor, scope: HttpClient) {
             scope.requestPipeline.intercept(HttpRequestPipeline.Before) {
                 context.attributes.put(requestIdKey, requestId.getAndIncrement())
