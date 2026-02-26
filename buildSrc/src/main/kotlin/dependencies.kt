@@ -7,7 +7,7 @@ object sdk {
     const val target = 36
     const val compile = target
 
-    val java = JavaVersion.VERSION_17
+    val java = JavaVersion.VERSION_21
     const val kotlin = "2.3.10"
 
     const val ios = "10.0"

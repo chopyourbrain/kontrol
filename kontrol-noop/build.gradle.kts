@@ -10,10 +10,17 @@ group = "io.github.chopyourbrain"
 kotlin {
     androidTarget {
         publishLibraryVariants("release")
+
+        compilations.all {
+            compilerOptions.configure {
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+            }
+        }
     }
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+    jvmToolchain(21)
 
     sourceSets {
         commonMain.dependencies {
@@ -38,8 +45,8 @@ android {
         minSdk = sdk.min
     }
     compileOptions {
-        sourceCompatibility = sdk.java
-        targetCompatibility = sdk.java
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 }

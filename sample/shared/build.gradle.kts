@@ -9,7 +9,15 @@ plugins {
 version = "1.0"
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        publishLibraryVariants("release")
+
+        compilations.all {
+            compilerOptions.configure {
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            }
+        }
+    }
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -59,7 +67,7 @@ android {
         minSdk = sdk.min
     }
     compileOptions {
-        sourceCompatibility = sdk.java
-        targetCompatibility = sdk.java
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }

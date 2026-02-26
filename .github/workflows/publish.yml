@@ -1,66 +1,26 @@
-name: Publish Library
+# .github/workflows/publish.yml
 
+name: Publish
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to publish from"
-        required: true
-        default: "main"
-
+  release:
+    types: [released, prereleased]
 jobs:
   publish:
-    runs-on: macos-latest
-
+    name: Release build and publish
+    runs-on: macOS-latest
     steps:
-
-      # ========================
-      # Checkout
-      # ========================
-
-      - name: Checkout repository
+      - name: Check out code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch }}
-          fetch-depth: 1
-
-      # Fix git safety directory
-      - name: Setup Git
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
-      # ========================
-      # Java Setup
-      # ========================
-
-      - name: Setup Java
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
-          java-version: 17
-
-      # ========================
-      # Gradle Cache
-      # ========================
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      # ========================
-      # Publish
-      # ========================
-
-      - name: Publish library
-        run: ./gradlew publish --no-daemon
+          distribution: 'zulu'
+          java-version: 21
+      - name: Publish to MavenCentral
+        run: ./gradlew publishToMavenCentral --no-configuration-cache
         env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-
-      # ========================
-      # Optional verification
-      # ========================
-
-      - name: Verify build success
-        if: failure()
-        run: echo "Publishing failed"
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
