@@ -1,57 +1,58 @@
-import java.util.*
+import org.gradle.api.publish.maven.MavenPublication
+import java.util.Base64
 
 plugins {
     `maven-publish`
     signing
 }
-ext["signing.keyId"] = null
-ext["signing.password"] = null
-ext["signing.secretKeyRingFile"] = null
-ext["ossrhUsername"] = null
-ext["ossrhPassword"] = null
 
-val secretPropsFile = project.rootProject.file("local.properties")
-if (secretPropsFile.exists()) {
-    secretPropsFile.reader().use {
-        Properties().apply {
-            load(it)
-        }
-    }.onEach { (name, value) ->
-        ext[name.toString()] = value
-    }
-} else {
-    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
-    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
-    ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
-    ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
-    ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
-}
+val sonatypeUsername: String? = System.getenv("SONATYPE_USERNAME")
+    ?: project.findProperty("SONATYPE_USERNAME") as? String
 
-val javadocJar by tasks.registering(Jar::class) {
+val sonatypePassword: String? = System.getenv("SONATYPE_PASSWORD")
+    ?: project.findProperty("SONATYPE_PASSWORD") as? String
+
+val signingKey: String? = System.getenv("SIGNING_KEY")
+    ?: project.findProperty("SIGNING_KEY") as? String
+
+val signingPassword: String? = System.getenv("SIGNING_PASSWORD")
+    ?: project.findProperty("SIGNING_PASSWORD") as? String
+
+tasks.register<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
 }
 
-fun getExtraString(name: String) = ext[name]?.toString()
-
 publishing {
+
     repositories {
-        maven {
-            name = "sonatype"
-            setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = getExtraString("ossrhUsername")
-                password = getExtraString("ossrhPassword")
+
+        if (!sonatypeUsername.isNullOrBlank() &&
+            !sonatypePassword.isNullOrBlank()
+        ) {
+
+            maven {
+                name = "centralPortal"
+
+                url = uri(
+                    "https://central.sonatype.com/api/v1/publisher/upload"
+                )
+
+                credentials {
+                    username = sonatypeUsername
+                    password = sonatypePassword
+                }
             }
         }
     }
 
-    publications.withType<MavenPublication> {
+    publications.withType<MavenPublication>().configureEach {
 
-        artifact(javadocJar.get())
+        artifact(tasks.named("javadocJar").get())
 
         pom {
-            name.set("kontrol")
-            description.set("Debug menu library for Kotlin Multiplatform Mobile")
+
+            name.set(project.name)
+            description.set("KMP library ${project.name}")
             url.set("https://github.com/chopyourbrain/kontrol")
 
             licenses {
@@ -60,6 +61,7 @@ publishing {
                     url.set("https://opensource.org/licenses/MIT")
                 }
             }
+
             developers {
                 developer {
                     id.set("chopyourbrain")
@@ -67,14 +69,33 @@ publishing {
                     email.set("qtd130@gmail.com")
                 }
             }
+
             scm {
+                connection.set("scm:git:github.com/chopyourbrain/kontrol.git")
+                developerConnection.set(
+                    "scm:git:ssh://git@github.com/chopyourbrain/kontrol.git"
+                )
                 url.set("https://github.com/chopyourbrain/kontrol")
             }
-
         }
     }
 }
 
 signing {
-    sign(publishing.publications)
+
+    if (!signingKey.isNullOrBlank()) {
+
+        val decodedKey = try {
+            String(Base64.getDecoder().decode(signingKey))
+        } catch (e: Exception) {
+            signingKey
+        }
+
+        useInMemoryPgpKeys(
+            decodedKey,
+            signingPassword
+        )
+
+        sign(publishing.publications)
+    }
 }
