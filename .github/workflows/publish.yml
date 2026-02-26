@@ -1,16 +1,25 @@
-name: Publish to Maven Central
+name: Publish Library (Manual Only)
 
 on:
- workflow_dispatch:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to publish from"
+        required: true
+        default: "main"
+        type: string
 
 jobs:
   publish:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
-      - name: Setup JDK
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -19,7 +28,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
-      - name: Publish
+      - name: Publish library
         run: ./gradlew publish
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
