@@ -11,7 +11,7 @@ Kontrol - a Kotlin Multiplatform library for creating a debugging menu.
 
 ## Setup
 
-### KMM:
+### KMP:
 
 Add a dependency to your build.gradle
 
@@ -153,6 +153,32 @@ Then create DebugScreen object and use `show()` for open screen:
 val debugScreen = createDebugScreen(properties, kvStorage)
 debugScreen.show()
 ```
+
+## No-Op for Release Builds
+
+To avoid shipping debug UI code in release builds, swap the `kontrol` dependency for `kontrol-noop`. It has the same public API but all implementations are empty — no UI, no database, no network interception.
+
+### KMP:
+
+```kotlin
+val commonMain by getting {
+    dependencies {
+        // debug builds
+        debugImplementation("io.github.chopyourbrain:kontrol:$kontrol_version")
+        // release builds — same API, zero overhead
+        releaseImplementation("io.github.chopyourbrain:kontrol-noop:$kontrol_version")
+    }
+}
+```
+
+### Android:
+
+```kotlin
+debugImplementation("io.github.chopyourbrain:kontrol-android:$kontrol_version")
+releaseImplementation("io.github.chopyourbrain:kontrol-noop:$kontrol_version")
+```
+
+No code changes required — all calls to `kontrolAndroidInstall`, `createDebugScreen`, `KontrolKtorInterceptor`, `KontrolOkhttpInterceptor`, etc. become no-ops at runtime.
 
 ## SAMPLE
 [Click here](https://github.com/chopyourbrain/kontrol/tree/master/sample)

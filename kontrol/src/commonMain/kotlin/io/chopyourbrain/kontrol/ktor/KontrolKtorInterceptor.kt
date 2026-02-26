@@ -156,8 +156,10 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
             }
 
             if (plugin.level.body) {
-                val observer: ResponseHandler = { response -> plugin.processResponse(response) }
-                ResponseObserver.prepare { onResponse(observer) }.install(scope)
+                val observer = ResponseObserver.prepare {
+                    onResponse { response -> plugin.processResponse(response) }
+                }
+                ResponseObserver.install(observer, scope)
             }
         }
     }
@@ -169,7 +171,7 @@ class KontrolKtorInterceptor(val level: DetailLevel) {
 }
 
 private fun joinHeaders(entries: Set<Map.Entry<String, List<String>>>): Map<String, String> {
-    return entries.sortedBy { it.key }.map {
+    return entries.sortedBy { it.key }.associate {
         it.key to it.value.joinToString("; ")
-    }.toMap()
+    }
 }

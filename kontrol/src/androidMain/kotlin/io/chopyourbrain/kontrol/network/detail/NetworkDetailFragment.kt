@@ -27,8 +27,8 @@ internal class NetworkDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 val call = getCallById(callId)
                 binding.kntrlPager.adapter =
                     NetworkDetailPagerAdapter(childFragmentManager, lifecycle, call)

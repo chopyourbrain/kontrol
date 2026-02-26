@@ -1,5 +1,6 @@
 package io.chopyourbrain.kontrol.properties
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ import io.chopyourbrain.kontrol.android.databinding.KntrlItemTitlePropertyBindin
 internal class PropertiesFragment : Fragment() {
     private val diff = object : DiffUtil.ItemCallback<Property>() {
         override fun areItemsTheSame(oldItem: Property, newItem: Property) = oldItem === newItem
+        @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: Property, newItem: Property): Boolean {
             return oldItem.toString() == newItem.toString()
         }
