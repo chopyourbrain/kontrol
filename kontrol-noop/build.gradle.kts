@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("convention.publication")
+    id("com.vanniktech.maven.publish") version "0.36.0"
 }
 
 version = "1.0.0"
@@ -9,7 +9,7 @@ group = "io.github.chopyourbrain"
 
 kotlin {
     androidTarget {
-        publishLibraryVariants("release", "debug")
+        publishLibraryVariants("release")
     }
     iosX64()
     iosArm64()
@@ -42,4 +42,40 @@ android {
         targetCompatibility = sdk.java
     }
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}
+
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+    coordinates(
+        groupId = "io.github.chopyourbrain",
+        artifactId = project.name,
+        version = project.version.toString()
+    )
+    pom {
+        name.set(project.name)
+        description.set("KMP library ${project.name}")
+        url.set("https://github.com/chopyourbrain/kontrol")
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+        developers {
+            developer {
+                id.set("chopyourbrain")
+                name.set("Mikhail Kuznetsov")
+                email.set("qtd130@gmail.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/chopyourbrain/kontrol")
+            connection.set("scm:git:github.com/chopyourbrain/kontrol.git")
+            developerConnection.set(
+                "scm:git:ssh://git@github.com/chopyourbrain/kontrol.git"
+            )
+        }
+    }
 }

@@ -1,0 +1,66 @@
+name: Publish Library
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to publish from"
+        required: true
+        default: "main"
+
+jobs:
+  publish:
+    runs-on: macos-latest
+
+    steps:
+
+      # ========================
+      # Checkout
+      # ========================
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 1
+
+      # Fix git safety directory
+      - name: Setup Git
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      # ========================
+      # Java Setup
+      # ========================
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # ========================
+      # Gradle Cache
+      # ========================
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      # ========================
+      # Publish
+      # ========================
+
+      - name: Publish library
+        run: ./gradlew publish --no-daemon
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+
+      # ========================
+      # Optional verification
+      # ========================
+
+      - name: Verify build success
+        if: failure()
+        run: echo "Publishing failed"
