@@ -3,9 +3,9 @@
 ![badge][badge-android]
 ![badge][badge-ios]
 
-<img src="https://github.com/chopyourbrain/kontrol/blob/master/screenshots/1.png" width="281" height="600"><img src="https://github.com/chopyourbrain/kontrol/blob/master/screenshots/4.png" width="299" height="600">
+<img src="https://github.com/chopyourbrain/kontrol/blob/main/screenshots/1.png" width="281" height="600"><img src="https://github.com/chopyourbrain/kontrol/blob/main/screenshots/4.png" width="299" height="600">
 
-<img src="https://github.com/chopyourbrain/kontrol/blob/master/screenshots/2.png" width="281" height="600"><img src="https://github.com/chopyourbrain/kontrol/blob/master/screenshots/3.png" width="299" height="600">
+<img src="https://github.com/chopyourbrain/kontrol/blob/main/screenshots/2.png" width="281" height="600"><img src="https://github.com/chopyourbrain/kontrol/blob/main/screenshots/3.png" width="299" height="600">
 
 Kontrol - a Kotlin Multiplatform library for creating a debugging menu.
 
@@ -181,7 +181,7 @@ releaseImplementation("io.github.chopyourbrain:kontrol-noop:$kontrol_version")
 No code changes required — all calls to `kontrolAndroidInstall`, `createDebugScreen`, `KontrolKtorInterceptor`, `KontrolOkhttpInterceptor`, etc. become no-ops at runtime.
 
 ## SAMPLE
-[Click here](https://github.com/chopyourbrain/kontrol/tree/master/sample)
+[Click here](https://github.com/chopyourbrain/kontrol/tree/main/sample)
 
 ## ENJOY!
 
